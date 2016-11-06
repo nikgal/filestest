@@ -1,25 +1,22 @@
 package by.galov.testfiles;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.Arrays;
 
 public class Test {
 
     public static void main(String[] args) {
-        File file = new File("input.txt");
-        System.out.println(file.exists());
-        
-        try {
-            FileOutputStream fs = new FileOutputStream(file);
-            fs.write(120);
-        } catch (FileNotFoundException e) {
-           System.out.println("File not found!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
+        File path = new File(".");
+        String [] list;
+        if (args.length == 0)
+            list = path.list();
+        else 
+            list = path.list(new DirFilter(args[0]));
+            Arrays.sort(list,String.CASE_INSENSITIVE_ORDER);
+            for(String dirItem : list)
+                System.out.println(dirItem);
+            
+    
 
     }
 
