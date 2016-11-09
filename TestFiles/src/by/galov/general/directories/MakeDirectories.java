@@ -1,7 +1,15 @@
 package by.galov.general.directories;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringReader;
 
 public class MakeDirectories {
     
@@ -30,7 +38,7 @@ public class MakeDirectories {
             System.out.println("It is a dir");
     }
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
        if(args.length<1) usage();
        if(args[0].equals("-r")){
            if(args.length != 3) usage();
@@ -55,6 +63,44 @@ public class MakeDirectories {
         } catch (IOException e) {
             e.printStackTrace();
         }
+           return;
+       }
+       if(args[0].equals("-c")){
+           if(args.length != 2) usage();
+           File f = new File(args[1]);
+           try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+           return;
+       }
+       if(args[0].equals("-read")){
+           if(args.length != 2) usage();
+           File f = new File(args[1]);
+           
+          BufferedReader in = new BufferedReader(new FileReader(f));
+          
+           
+          String s;
+          StringBuilder sb = new StringBuilder();
+          while((s = in.readLine()) != null){
+              sb.append(s+"\n");
+          }
+          System.out.println(sb.toString());
+          in.close();
+           return;
+       }
+       if(args[0].equals("-write")){
+           if(args.length != 3) usage();
+           File f = new File(args[1]);
+           
+          BufferedReader in = new BufferedReader(new FileReader(f));
+          PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+          
+          String s = args[2];
+          out.println(s);
+          out.close();
            return;
        }
     }
