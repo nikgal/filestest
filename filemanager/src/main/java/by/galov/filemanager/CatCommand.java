@@ -12,7 +12,6 @@ public class CatCommand extends Command {
     public CatCommand(Map<String, String> args) {
         super(args);
         this.file = new File(args.get("arg1"));
-        // TODO Auto-generated constructor stub
     }
     
     @Override
@@ -24,12 +23,14 @@ public class CatCommand extends Command {
                 BufferedReader in = new BufferedReader(new FileReader(file));
                 System.out.println("Openning "+file.getAbsolutePath()+"...");
                 while((s=in.readLine()) != null){
-                    sb.append(s+"\n");
+                    sb.append(s);
+                    sb.append("\n");
                 }
                 System.out.println(sb.toString());
                 in.close();
+                logCmd.finest("file was read");
             }else{
-                System.out.println("File does not exists");
+                logCmd.warning("File does not exists");
             }
         } catch (IOException e) {
             System.out.println("Can not read the file! ");
@@ -43,11 +44,13 @@ public class CatCommand extends Command {
 
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1")!=null && argument.get("arg2")==null){
+            logCmd.fine("arguments were defined");
             return true;
-        }else
-        return false;
+        } else{
+            logCmd.warning("arguments weren't defined correctly");
+            return false;
+          }
     }
 
 }

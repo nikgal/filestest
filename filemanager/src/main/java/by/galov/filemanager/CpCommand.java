@@ -26,8 +26,9 @@ public class CpCommand extends Command {
                         + " "+to.toString()+"...");
                 try {
                     Files.copy(from.toPath(), to.toPath());
+                    logCmd.finest("copying "+from.toString() + "to" + to.toString());
                 } catch (IOException e) {
-                    System.err.println("wrong path");
+                    logCmd.severe("wrong path");
                 }
             }else{
                 System.err.println("Target directory is already exists ! ");
@@ -45,10 +46,11 @@ public class CpCommand extends Command {
 
     @Override
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1")!=null && argument.get("arg2")!=null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

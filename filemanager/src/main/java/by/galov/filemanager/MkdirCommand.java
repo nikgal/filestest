@@ -18,6 +18,7 @@ public class MkdirCommand extends Command {
     public void execute() {
         if(file.mkdir()){
             System.out.println(file.getAbsolutePath()+" was created !");
+            logCmd.finest("mkdir done");
         }else{
             System.err.println("it is not directory");
         }
@@ -30,10 +31,11 @@ public class MkdirCommand extends Command {
 
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1")!=null && argument.get("arg2")==null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

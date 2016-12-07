@@ -20,6 +20,7 @@ public class MwCommand extends Command {
         System.out.println("Moving from"+from.toString()+" to "+to.toString());
         try {
             Files.move(from.toPath(), to.toPath());
+            logCmd.fine("mw done");
         } catch (IOException e) {
             System.err.println("wrong path");
         }
@@ -31,10 +32,11 @@ public class MwCommand extends Command {
 
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1")!=null && argument.get("arg2")!=null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

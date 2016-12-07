@@ -1,9 +1,11 @@
 package by.galov.filemanager;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public abstract class Command {
     protected Map<String, String> argument;
+    Logger logCmd = Logger.getLogger(TestManager.class.getName());
     public Command(Map<String, String> args) {
         // TODO Auto-generated constructor stub
         this.argument = args;

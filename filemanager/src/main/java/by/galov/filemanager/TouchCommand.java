@@ -17,6 +17,7 @@ public class TouchCommand extends Command {
         try {
             if(file.createNewFile()){
                 System.out.println("File was created");
+                logCmd.finest("file was created");
             }else{
                 System.out.println("file wasn't created");
             }
@@ -32,10 +33,11 @@ public class TouchCommand extends Command {
 
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1")!=null && argument.get("arg2")==null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

@@ -7,19 +7,19 @@ public class DateCommand extends Command {
 
     public DateCommand(Map<String, String> args) {
         super(args);
-        // TODO Auto-generated constructor stub
+        
     }
 
     public DateCommand() {
         super(null);
-        // TODO Auto-generated constructor stub
+     
     }
 
     @Override
     public void execute() {
         Date now = new Date();
-        // TODO Auto-generated method stub
         System.out.println(now.toString());
+        logCmd.fine("done");
     }
 
     @Override
@@ -28,10 +28,12 @@ public class DateCommand extends Command {
         System.out.println("date - current date");
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
+     
         if (argument.get("arg1")==null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

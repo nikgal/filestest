@@ -32,6 +32,7 @@ public class FindCommand extends Command {
            
             if(!fileFound){
                 System.out.println("file not found! in "+ file);
+                logCmd.fine("find done");
             }
         }else{
             System.err.println("Incorrect dir!");
@@ -43,10 +44,11 @@ public class FindCommand extends Command {
         System.out.println("find file_name path - search file_name in path");
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1") != null && argument.get("arg2") != null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

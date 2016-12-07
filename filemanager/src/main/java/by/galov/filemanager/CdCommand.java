@@ -23,6 +23,7 @@ public class CdCommand extends Command {
             } else{
                 
                 TestManager.currentDir = file.getAbsoluteFile();
+                logCmd.finest("cd success");
             }
         }
 
@@ -35,8 +36,10 @@ public class CdCommand extends Command {
     }
     public boolean isCorrect() {
         if (argument.get("arg1") != null && argument.get("arg2") == null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 

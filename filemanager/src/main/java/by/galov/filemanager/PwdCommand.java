@@ -13,6 +13,7 @@ public class PwdCommand extends Command {
     @Override
     public void execute() {
         System.out.println(file.toString());
+        logCmd.fine("pwd done");
     }
 
     @Override
@@ -22,10 +23,12 @@ public class PwdCommand extends Command {
     }
 
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
+        
         if (argument.get("arg1")==null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 }

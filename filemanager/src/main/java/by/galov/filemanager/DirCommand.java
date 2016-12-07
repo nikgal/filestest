@@ -17,6 +17,7 @@ public class DirCommand extends Command {
         for(File file: files){
             System.out.println(file.getName());
         }
+        logCmd.fine("dir done");
 
     }
 
@@ -25,10 +26,11 @@ public class DirCommand extends Command {
         System.out.println("dir - show current directory list");
     }
     public boolean isCorrect() {
-        // TODO Auto-generated method stub
         if (argument.get("arg1")==null){
+            logCmd.fine("arguments were defined");
             return true;
         }else
+            logCmd.warning("arguments weren't defined correctly");
         return false;
     }
 
