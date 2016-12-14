@@ -27,7 +27,7 @@ public class ImgCommand extends Command {
     public void execute() {
         switch(argument.get("arg2")){
             case "noire":
-                //int[][] result = convertTo2DUsingGetRGB(image);
+                
                 long startTime = System.nanoTime();
                 for(int width=0; width < image.getWidth(); width++)
                 {
@@ -54,9 +54,10 @@ public class ImgCommand extends Command {
                
                 startTime = System.nanoTime();
                 BufferedImage imageRed = null;
+                File fileRed = new File("d:\\111.jpg");
                 try {
-                    ImageIO.write(image, "jpg", new File("d:\\111.jpg"));
-                    imageRed = ImageIO.read(new File("d:\\111.jpg"));
+                    ImageIO.write(image, "jpg", fileRed );
+                    imageRed = ImageIO.read(fileRed);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -64,23 +65,27 @@ public class ImgCommand extends Command {
           
                 for(int x = 0; x < Integer.parseInt(argument.get("arg3")); x++)
                 {
-                    for(int width = 1; width < imageRed.getWidth() - 1; width++)
+                    for(int width = 1; width < imageRed.getWidth()/2 - 1; width+=2)
                     {
-                        for(int height = 1; height < imageRed.getHeight() - 1; height+=2)
+                        for(int height = 1; height < imageRed.getHeight()/2 - 1; height+=2)
                         { 
                              Color temp = new Color((int) ((
-                                     imageRed.getRGB(width - 1, height) + 
-                                     imageRed.getRGB(width + 1, height) +
-                                     imageRed.getRGB(width, height - 1) +
-                                     imageRed.getRGB(width, height + 1) +
+                                     -imageRed.getRGB(width - 1, height) + 
+                                     imageRed.getRGB(width + 1, height) -
+                                     imageRed.getRGB(width, height - 1) -
+                                     imageRed.getRGB(width, height + 1) -
                                      imageRed.getRGB(width, height)) / 5.0));
 
                              imageRed.setRGB(width, height, temp.getRGB());
+                             imageRed.setRGB(width + 1, height, temp.getRGB());
+                             imageRed.setRGB(width - 1, height, temp.getRGB());
+                             imageRed.setRGB(width, height + 1, temp.getRGB());
+                             imageRed.setRGB(width, height - 1, temp.getRGB());
                             
                         }
                     }
                     try {
-                        ImageIO.write(imageRed, "jpg", new File("d:\\121.jpg"));
+                        ImageIO.write(imageRed, "jpg", new File("d:\\out.jpg"));
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
