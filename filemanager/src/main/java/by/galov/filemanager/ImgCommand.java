@@ -2,6 +2,9 @@ package by.galov.filemanager;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -21,76 +24,45 @@ public class ImgCommand extends Command {
             e.printStackTrace();
         }
     }
-    
+    Thread t1 = new Thread();
 
+    public void toNoire(BufferedImage img, File f) {
+        
+        for(int width=0; width < img.getWidth(); width++)
+        {
+            for(int height=0; height < img.getHeight(); height++)
+            { 
+                 Color temp = new Color(img.getRGB(width, height));
+                 int aver = (int) ((temp.getBlue() + temp.getGreen() + temp.getRed())/3.0);
+                 Color target = new Color(aver, aver, aver);
+                 img.setRGB(width, height, target.getRGB());
+                
+            }
+        }
+        
+        try {
+            ImageIO.write(img, "jpg", f);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
     @Override
     public void execute() {
         switch(argument.get("arg2")){
             case "noire":
-                
+                File f = new File(argument.get("arg3"));
                 long startTime = System.nanoTime();
-                for(int width=0; width < image.getWidth(); width++)
-                {
-                    for(int height=0; height < image.getHeight(); height++)
-                    { 
-                         Color temp = new Color(image.getRGB(width, height));
-                         int aver = (int) ((temp.getBlue() + temp.getGreen() + temp.getRed())/3.0);
-                         Color target = new Color(aver, aver, aver);
-                         image.setRGB(width, height, target.getRGB());
-                        
-                    }
-                }
+                toNoire(image,f);
                 long endTime = System.nanoTime();
-            try {
-                ImageIO.write(image, "jpg", new File("d:\\111.jpg"));
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            System.out.println(toString(endTime - startTime));
-            break;
+                System.out.println(toString(endTime - startTime));
+                break;
             
             case "blur":
-               
+                File fb = new File(argument.get("arg3"));
                 startTime = System.nanoTime();
-                BufferedImage imageRed = null;
-                File fileRed = new File("d:\\111.jpg");
-                try {
-                    ImageIO.write(image, "jpg", fileRed );
-                    imageRed = ImageIO.read(fileRed);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-          
-                for(int x = 0; x < Integer.parseInt(argument.get("arg3")); x++)
-                {
-                    for(int width = 1; width < imageRed.getWidth()/2 - 1; width+=2)
-                    {
-                        for(int height = 1; height < imageRed.getHeight()/2 - 1; height+=2)
-                        { 
-                             Color temp = new Color((int) ((
-                                     -imageRed.getRGB(width - 1, height) + 
-                                     imageRed.getRGB(width + 1, height) -
-                                     imageRed.getRGB(width, height - 1) -
-                                     imageRed.getRGB(width, height + 1) -
-                                     imageRed.getRGB(width, height)) / 5.0));
-
-                             imageRed.setRGB(width, height, temp.getRGB());
-                             imageRed.setRGB(width + 1, height, temp.getRGB());
-                             imageRed.setRGB(width - 1, height, temp.getRGB());
-                             imageRed.setRGB(width, height + 1, temp.getRGB());
-                             imageRed.setRGB(width, height - 1, temp.getRGB());
-                            
-                        }
-                    }
-                    try {
-                        ImageIO.write(imageRed, "jpg", new File("d:\\out.jpg"));
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
+                blur(image, fb);
+               
                 endTime = System.nanoTime();
            
             System.out.println(toString(endTime - startTime));
@@ -98,6 +70,29 @@ public class ImgCommand extends Command {
             
             default: System.err.println("unknown command");
           }
+    }
+    
+    private void blur(BufferedImage img, File f) {
+
+        
+        float[] matrix = {
+                0.111f, 0.111f, 0.111f, 
+                0.111f, 0.111f, 0.111f, 
+                0.111f, 0.111f, 0.111f, 
+                };
+        BufferedImage blur = null;
+        BufferedImageOp op = new ConvolveOp( new Kernel(3, 3, matrix) );
+
+                blur = op.filter(img, blur);
+            
+        try {
+            ImageIO.write(blur, "jpg", f );
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        
+        } 
+        
     }
     
     private static String toString(long nanoSecs) {
