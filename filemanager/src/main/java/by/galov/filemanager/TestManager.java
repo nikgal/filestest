@@ -36,6 +36,8 @@ public class TestManager {
                 return new MkdirCommand(parseArguments(args));
             case "touch": 
                 return new TouchCommand(parseArguments(args));
+            case "img": 
+                return new ImgCommand(parseArguments(args));
             default:
             return null;
         }
