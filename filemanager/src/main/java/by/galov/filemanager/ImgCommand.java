@@ -11,7 +11,11 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class ImgCommand extends Command {
+public class ImgCommand extends Command implements Runnable {
+    public void run() {
+        System.out.println("run2");
+    }
+
     private File file;
     private  BufferedImage image;
     public ImgCommand(Map<String, String> args) {
@@ -24,7 +28,6 @@ public class ImgCommand extends Command {
             e.printStackTrace();
         }
     }
-    Thread t1 = new Thread();
 
     public void toNoire(BufferedImage img, File f) {
         
@@ -68,6 +71,8 @@ public class ImgCommand extends Command {
             System.out.println(toString(endTime - startTime));
             break;
             
+            
+            
             default: System.err.println("unknown command");
           }
     }
@@ -95,7 +100,7 @@ public class ImgCommand extends Command {
         
     }
     
-    private static String toString(long nanoSecs) {
+    static String toString(long nanoSecs) {
         int minutes    = (int) (nanoSecs / 60000000000.0);
         int seconds    = (int) (nanoSecs / 1000000000.0)  - (minutes * 60);
         int millisecs  = (int) ( ((nanoSecs / 1000000000.0) - (seconds + minutes * 60)) * 1000);
