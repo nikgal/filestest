@@ -38,6 +38,8 @@ public class TestManager {
                 return new TouchCommand(parseArguments(args));
             case "img": 
                 return new ImgCommand(parseArguments(args));
+            case "thread": 
+                return new ImgFilter(parseArguments(args));
             default:
             return null;
         }

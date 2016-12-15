@@ -13,8 +13,9 @@ import javax.imageio.ImageIO;
 
 public class ImgCommand extends Command implements Runnable {
     public void run() {
-        System.out.println("run2");
+       execute();
     }
+   
 
     private File file;
     private  BufferedImage image;
@@ -22,7 +23,7 @@ public class ImgCommand extends Command implements Runnable {
         super(args);
         file = new File(args.get("arg1"));
         try {
-            image = ImageIO.read(file);
+            setImage(ImageIO.read(file));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -56,7 +57,7 @@ public class ImgCommand extends Command implements Runnable {
             case "noire":
                 File f = new File(argument.get("arg3"));
                 long startTime = System.nanoTime();
-                toNoire(image,f);
+                toNoire(getImage(),f);
                 long endTime = System.nanoTime();
                 System.out.println(toString(endTime - startTime));
                 break;
@@ -64,7 +65,7 @@ public class ImgCommand extends Command implements Runnable {
             case "blur":
                 File fb = new File(argument.get("arg3"));
                 startTime = System.nanoTime();
-                blur(image, fb);
+                blur(getImage(), fb);
                
                 endTime = System.nanoTime();
            
@@ -77,7 +78,7 @@ public class ImgCommand extends Command implements Runnable {
           }
     }
     
-    private void blur(BufferedImage img, File f) {
+    public void blur(BufferedImage img, File f) {
 
         
         float[] matrix = {
@@ -135,6 +136,14 @@ public class ImgCommand extends Command implements Runnable {
         }else
             logCmd.warning("arguments weren't defined correctly");
         return false;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
 }
