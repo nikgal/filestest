@@ -12,7 +12,9 @@ import java.util.logging.Logger;
 public class TestManager {
     
     public static File currentDir = new File(System.getProperty("user.dir"));
+    
     static Logger log = Logger.getLogger(TestManager.class.getName());
+    
     private static Command parseCommand(String commandString){
         String[] args = commandString.split(" ");
         switch (args[0]) {
@@ -40,6 +42,8 @@ public class TestManager {
                 return new ImgCommand(parseArguments(args));
             case "thread": 
                 return new ImgFilter(parseArguments(args));
+            case "wc": 
+                return new WcCommand(parseArguments(args));
             default:
             return null;
         }
