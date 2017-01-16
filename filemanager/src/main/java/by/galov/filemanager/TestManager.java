@@ -44,6 +44,8 @@ public class TestManager {
                 return new ImgFilter(parseArguments(args));
             case "wc": 
                 return new WcCommand(parseArguments(args));
+            case "w": 
+                return new WeatherCommand(parseArguments(args));
             default:
             return null;
         }
