@@ -86,6 +86,7 @@ public class WeatherCommand extends Command{
                 }
             }
         }
+        /*   SaxParse test ....
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer;
         try {
@@ -103,6 +104,7 @@ public class WeatherCommand extends Command{
         }
         
         
+        
         SAXParser parser = new SAXParser("city");
         try {
             parser.parser.parse(new File("out.xml"), parser);
@@ -114,7 +116,7 @@ public class WeatherCommand extends Command{
             e.printStackTrace();
         }
         parser.displayRes();
-        
+        */
 
     }
 
