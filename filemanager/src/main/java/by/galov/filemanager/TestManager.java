@@ -46,6 +46,8 @@ public class TestManager {
                 return new WcCommand(parseArguments(args));
             case "w": 
                 return new WeatherCommand(parseArguments(args));
+            case "db": 
+                return new DbCommand(parseArguments(args));
             default:
             return null;
         }
