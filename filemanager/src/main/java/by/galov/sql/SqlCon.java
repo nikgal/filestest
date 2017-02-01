@@ -17,15 +17,19 @@ public class SqlCon {
                 Statement stm = conn.createStatement();
 
                 ResultSet resultSet = stm.executeQuery("SELECT*FROM shop");
+                ResultSetMetaData rsmd = resultSet.getMetaData();
+
+                int columnsNumber = rsmd.getColumnCount();
 
                 while (resultSet.next()){
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String price = resultSet.getString("price");
+                    for(int i = 1 ; i <= columnsNumber; i++){
 
-                    System.out.println(id + " " + name + " " + price);
-                }
+                        System.out.print(resultSet.getString(i) + "\t"); 
 
+                  }
+
+                    System.out.println();
+                }   
 
                 resultSet.close();
                 conn.close();
